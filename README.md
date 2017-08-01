@@ -1,2 +1,2 @@
 # CS50
-CS50 Problem Sets (all)
+Harvard CS50 Problem Sets.
