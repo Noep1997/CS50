@@ -1,0 +1,4 @@
+0. The framework allows dimensions 3 x 3 to 9 x 9.
+1. The game board is represented using the array data structure.
+2. The function void greet(void) is called at game's start.
+3. We need to implement the functions void init(void), void draw(void), bool move(int tile), bool won(void).
