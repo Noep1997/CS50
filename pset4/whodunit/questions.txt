@@ -1,0 +1,28 @@
+0. It is a header file (a library) that specifies exact-width integer types using macros.
+
+1. uint_8, uint_16, uint_32 are unsigned integers with a specific number of bits.They are therefore useful for implementing integers with a specific
+bit-length and that are not reserved for signing. uint_32 specifies a signed integer with 32 bits, which can therefore be used for signing. They are
+useful for specifying integers of fixed width in different contexts while specifying a max value, thus allowing you to have exactly the space you need.
+
+2. A BYTE is 1 byte (8 bits), a DWORD is 4 bytes (32 bits), a LONG is also 4 bytes (32 bits) and a WORD is 2 bytes (16 bits).
+
+3. The first two bytes of any BMP file in hexadecimal must be 0x42 0x4D.
+
+4. The difference is that bfSize is the size of the bitmap file (in bytes) while biSize is the number of bytes required by the structure of the file.
+
+5. If biHeight is negative, that means that DIB is top-down (which cannot be compressed) and that biCompression has to be BI_RGB or BI_BITFIELDS. More 
+simply put, it means that the file can't be compressed.
+
+6. It is the biBitCount field that specifies the BMP's color depth.
+
+7. When you are opening a file with fopen for read ("r") or write ("w"), that file must exist otherwise the function will return NULL. Therefore, fopen
+might return NULL at lines 24 and 32 in copy.c since it is possible that the file doesn't exist.
+
+8. The third argument in fread is the number of times we want the program to read the file. In our program, since we are always reading a struct, it is
+always 1 since we only want the program to read the file 1 time.
+
+9. Since bi.biWidth = 3 and sizeof(RGBTRIPLE) = 3, we have : (4 - (3 * 3) % 4) % 4 = (4 - 1) % 4 = 3. Therefore the padding would be 3.
+
+10. The function fseek is used to change the location of the file pointer.
+
+11. It is the current location of the pointer. You need to use SEEK_CUR with fseek (from from_where) to set the value of the pointer to the current value.
