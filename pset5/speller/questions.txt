@@ -1,0 +1,39 @@
+0.  It is a pneumoconiosis that is caused by inhaling quartz dust or very fine silicate dust (and the longest English word!)
+
+1.  It returns resource usage measures for who (the first argument), either as RUSAGE_SELF (usage statistics for the calling
+    process), RUSAGE_CHILDREN (usage statistics for all children of the calling process that have terminated and been waited for)
+    or RUSAGE_THREAD (usage statistics for the calling thread) in a structure pointed by usage (the second argument)
+
+2.  There are 16 members (14 long variables and 2 struct)
+
+3.  It makes the code much more readable than by using magic numbers that don't have a direct meaning. Also, a struct is very
+    convenient to work with.
+
+4.  This function takes either 1 or 2 inputs (depending on wether or not the user provides a dictionary. If he does, the function
+    takes this dictionary, otherwise it takes the dictionary that is already inputted in the function. The dictionary is then
+    loaded and the function verifies if the text can be opened. If it can, it is ready to read words.
+
+    The for loop that spell-checks the words goes through all the characters in the text one by one until the end (E0F). The if
+    statements then check that the character is an apostrophe or an alphabetical character to make sure it can constitute a word. If
+    the current character is an apostrophe or an alphabetical character, it appends it to the current word to eventually form a word
+    and increase the index to keep iterating through the file. There is also an if statement inside this if statement that avoids
+    strings too long to be words by iterating through the strings if they are longer than the 45 character-long word without
+    appending anything with a while loop. Also, the else if statement following these two if statements verify if the current
+    character is a number or not and discard the current string if it contains a number (with the same while loop as before). Now
+    that we have characters appended to a word, we must have a whole word. To make it an actual string, the new else if statements
+    terminates it by '0\' and updates the word counter to reflect that a word (without having been spell-checked) (so really only a
+    string of alphabetical characters and apostrophes) as been found. Then the spelling of the word is checked with getrusage and
+    the check function that have been previously loaded with the dictionary. If the word matches with a word from the dictionary,
+    it will return a bool true and then go to the next word. If it doesn't match, it will return a bool false, print the word,
+    increase the misspelling count by 1 to output it at the end of the program, and then go to the next word (resetting index to 0).
+
+5.  The function fgetc reads one character at a time only using their pointer as a parameter. This allows us to check that every
+    character is okay to make a word (like avoid digits, non-alphabetical/apostrophe characters). The function fscanf also takes the
+    datatype as a parameter (like %s for a string). Therefore, it doesn't read one character at a time, but rather whole words, etc.
+    and this is problematic since datatypes like int can be converted to strings. Using this function would be highly inaccurate by
+    accepting words that aren't proper words as words to be checked for spelling.
+
+6.  You defined them as constant since those parameters are the word to be looked in the dictionary and the actual dictionary. We
+    don't want these two parameters to vary since we want to precisely verify that we exact word typed is in the actual dictionary.
+    Not setting them to constant could be bring imprecisions during the actual algorithm (slightly modifying the arguments while
+    running the code).
