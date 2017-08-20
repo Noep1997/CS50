@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+
+import sys
+from twython import Twython
+from twython.exceptions import TwythonAuthError
+from analyzer import Analyzer
+from termcolor import colored
+from helpers import get_user_timeline
+
+# analyze tweets
+def main():
+    # ensure proper usage
+    if len(sys.argv) != 2:
+        sys.exit("Usage: ./tweets screen_name")
+
+    # get most recent 50 tweets
+    recent_tweets = get_user_timeline(sys.argv[1], 50)
+
+    # call Analyzer function
+    analyzer = Analyzer()
+
+    # analyze tweets and return score and text recolored accordingly
+    for tweet in recent_tweets:
+        score = analyzer.analyze(tweet)
+        if score > 0.0:
+            print(colored("{} {}".format(score, tweet), "green"))
+        elif score < 0.0:
+            print(colored("{} {}".format(score, tweet), "red"))
+        else:
+            print(colored("{} {}".format(score, tweet), "yellow"))
+
+# call main
+if __name__ == "__main__":
+    main()
