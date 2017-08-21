@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <main>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Shares</th>
+                    <th>Price</th>
+                    <th>Current Total (Negative for buy - Positive for sell)</th>
+                    <th>Transacted</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in table %}
+                    <tr>
+                        <td>{{row["symbol"]}}</td>
+                        <td>{{row["name"]}}</td>
+                        <td>{{row["quantity"]}}</td>
+                        <td>{{row["price"]}}</td>
+                        <td>${{row["current_value"]}}</td>
+                        <td>{{row["date"]}} - {{row["time"]}}</t>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}
